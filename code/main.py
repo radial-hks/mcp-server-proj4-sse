@@ -2,15 +2,21 @@ from mcp.server.fastmcp import FastMCP
 from starlette.applications import Starlette
 from starlette.routing import Mount
 from typing import List, Dict, Any
+from pydantic import BaseModel # Add pydantic import
 from core.transformation import CoordinateTransformer # Assuming core.transformation is in the same directory level
 
 mcp = FastMCP("Coordinate Transform App")
+
+# Define Pydantic model for a single coordinate
+class CoordinateItem(BaseModel):
+    x: float
+    y: float
 
 @mcp.tool(
     name="transform_coordinates",
     description="在不同坐标系统之间转换坐标，支持EPSG、WKT和Proj格式的坐标系统",
 )
-async def transform_coordinates(source_crs: str, target_crs: str, coordinates: List[Dict[str, float]]) -> str:
+async def transform_coordinates(source_crs: str, target_crs: str, coordinates: List[CoordinateItem]) -> str:
     """处理坐标转换请求"""
     if not all([source_crs, target_crs, coordinates]):
         # FastMCP might handle this based on schema, but explicit check is good.
@@ -28,7 +34,7 @@ async def transform_coordinates(source_crs: str, target_crs: str, coordinates: L
 
         results_log = []
         for coord in coordinates:
-            x, y = coord["x"], coord["y"]
+            x, y = coord.x, coord.y # Use Pydantic model attributes
             try:
                 trans_x, trans_y = transformer.transform_point(x, y)
                 results_log.append(
