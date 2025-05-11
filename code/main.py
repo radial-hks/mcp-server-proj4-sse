@@ -39,7 +39,7 @@ LIST_SUPPORTED_CRS_INPUT_SCHEMA = {
 }
 
 @mcp.tool(
-    name="transform-coordinates",
+    name="transform_coordinates",
     description="在不同坐标系统之间转换坐标，支持EPSG、WKT和Proj格式的坐标系统",
 )
 async def transform_coordinates(source_crs: str, target_crs: str, coordinates: List[Dict[str, float]]) -> str:
@@ -79,7 +79,7 @@ async def transform_coordinates(source_crs: str, target_crs: str, coordinates: L
         return f"坐标转换失败: {str(e)}"
 
 @mcp.tool(
-    name="list-supported-crs",
+    name="list_supported_crs",
     description="列出所有支持的坐标系统",
 )
 async def list_supported_crs() -> str:
