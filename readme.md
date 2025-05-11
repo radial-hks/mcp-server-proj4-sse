@@ -1,7 +1,7 @@
 
 > 注：当前项目为 Serverless Devs 应用，由于应用中会存在需要初始化才可运行的变量（例如应用部署地区、函数名等等），所以**不推荐**直接 Clone 本仓库到本地进行部署或直接复制 s.yaml 使用，**强烈推荐**通过 `s init ${模版名称}` 的方法或应用中心进行初始化，详情可参考[部署 & 体验](#部署--体验) 。
 
-# fcai-start-mcp-python-hello-world 帮助文档
+# mcp-server-proj4-sse
 
 <description>
 
@@ -58,15 +58,11 @@
 
 - 使用 FastMCP 框架实现 SSE 协议支持
 - 集成 Starlette 高性能 ASGI 服务器
-- 提供示例工具端点 `hello` 返回 "Hello World!"
+- 提供示例工具端点 `transform-coordinates`：在不同坐标系统之间转换坐标，支持EPSG、WKT和Proj格式的坐标系统
+- 提供示例工具端点 `list-supported-crs`：列出所有支持的坐标系统
 - 支持阿里云函数计算部署
 
 </appdetail>
-
-
-
-
-
 
 
 ## 使用流程
