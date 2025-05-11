@@ -4,7 +4,10 @@ from mcp.server.models import InitializationOptions
 import mcp.types as types
 from mcp.server import NotificationOptions, Server
 import mcp.server.stdio
-from .core.transformation import CoordinateTransformer
+import sys
+import os
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from core.transformation import CoordinateTransformer
 
 # 创建服务器实例
 server = Server("mcp-coordinate-transform")
@@ -14,7 +17,7 @@ async def handle_list_tools() -> list[types.Tool]:
     """列出可用的坐标转换工具"""
     return [
         types.Tool(
-            name="transform-coordinates",
+            name="transform_coordinates",
             description="在不同坐标系统之间转换坐标，支持EPSG、WKT和Proj格式的坐标系统",
             inputSchema={
                 "type": "object",
@@ -44,7 +47,7 @@ async def handle_list_tools() -> list[types.Tool]:
             },
         ),
         types.Tool(
-            name="list-supported-crs",
+            name="list_supported_crs",
             description="列出所有支持的坐标系统",
             inputSchema={
                 "type": "object",
@@ -58,7 +61,7 @@ async def handle_call_tool(
     name: str, arguments: dict | None
 ) -> list[types.TextContent | types.ImageContent | types.EmbeddedResource]:
     """处理工具调用请求"""
-    if name == "transform-coordinates":
+    if name == "transform_coordinates":
         if not arguments:
             raise ValueError("缺少参数")
         
@@ -108,7 +111,7 @@ async def handle_call_tool(
         except ValueError as e:
             raise ValueError(f"坐标转换失败: {str(e)}")
 
-    elif name == "list-supported-crs":
+    elif name == "list_supported_crs":
         return [
             types.TextContent(
                 type="text",
