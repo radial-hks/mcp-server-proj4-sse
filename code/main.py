@@ -6,38 +6,6 @@ from core.transformation import CoordinateTransformer # Assuming core.transforma
 
 mcp = FastMCP("Coordinate Transform App")
 
-TRANSFORM_COORDINATES_INPUT_SCHEMA = {
-    "type": "object",
-    "properties": {
-        "source_crs": {
-            "type": "string",
-            "description": "源坐标系统，支持以下格式：\n1. EPSG代码 (如：EPSG:4326)\n2. WKT格式 (如：GEOGCS[\"WGS 84\",DATUM[...]])\n3. Proj格式 (如：+proj=longlat +datum=WGS84)",
-        },
-        "target_crs": {
-            "type": "string",
-            "description": "目标坐标系统，支持以下格式：\n1. EPSG代码 (如：EPSG:4326)\n2. WKT格式 (如：GEOGCS[\"WGS 84\",DATUM[...]])\n3. Proj格式 (如：+proj=longlat +datum=WGS84)",
-        },
-        "coordinates": {
-            "type": "array",
-            "items": {
-                "type": "object",
-                "properties": {
-                    "x": {"type": "number"},
-                    "y": {"type": "number"},
-                },
-                "required": ["x", "y"]
-            },
-            "minItems": 1,
-        }
-    },
-    "required": ["source_crs", "target_crs", "coordinates"],
-}
-
-LIST_SUPPORTED_CRS_INPUT_SCHEMA = {
-    "type": "object",
-    "properties": {},
-}
-
 @mcp.tool(
     name="transform_coordinates",
     description="在不同坐标系统之间转换坐标，支持EPSG、WKT和Proj格式的坐标系统",
