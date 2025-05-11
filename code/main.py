@@ -18,16 +18,16 @@ class CoordinateItem(BaseModel):
 )
 async def transform_coordinates(source_crs: str, target_crs: str, coordinates: List[CoordinateItem]) -> str:
     """处理坐标转换请求"""
-    if not all([source_crs, target_crs, coordinates]):
-        # FastMCP might handle this based on schema, but explicit check is good.
-        # However, FastMCP expects the function to raise an error or return a value.
-        # For simplicity, we'll let FastMCP handle missing args based on schema if possible,
-        # or rely on the CoordinateTransformer to raise errors for invalid CRS.
-        # For now, let's assume valid inputs as per schema.
-        pass
+    # if not all([source_crs, target_crs, coordinates]):
+    #     # FastMCP might handle this based on schema, but explicit check is good.
+    #     # However, FastMCP expects the function to raise an error or return a value.
+    #     # For simplicity, we'll let FastMCP handle missing args based on schema if possible,
+    #     # or rely on the CoordinateTransformer to raise errors for invalid CRS.
+    #     # For now, let's assume valid inputs as per schema.
+    #     pass
 
-    transformer = CoordinateTransformer()
     try:
+        transformer = CoordinateTransformer()
         transformer.set_source_crs(source_crs)
         transformer.set_target_crs(target_crs)
         transformer.initialize_transformer()
