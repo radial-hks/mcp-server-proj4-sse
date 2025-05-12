@@ -1,22 +1,26 @@
 from mcp.server.fastmcp import FastMCP
 from starlette.applications import Starlette
 from starlette.routing import Mount
-from typing import List, Dict, Any
-from pydantic import BaseModel # Add pydantic import
+from typing import List, Dict, Any, Annotated # Add Annotated
+from pydantic import BaseModel, Field # Add Field
 from core.transformation import CoordinateTransformer # Assuming core.transformation is in the same directory level
 
 mcp = FastMCP("Coordinate Transform App")
 
 # Define Pydantic model for a single coordinate
 class CoordinateItem(BaseModel):
-    x: float
-    y: float
+    x: Annotated[float, Field(description="X坐标值")]
+    y: Annotated[float, Field(description="Y坐标值")]
 
 @mcp.tool(
     name="transform_coordinates",
     description="在不同坐标系统之间转换坐标，支持EPSG、WKT和Proj格式的坐标系统",
 )
-async def transform_coordinates(source_crs: str, target_crs: str, coordinates: List[CoordinateItem]) -> str:
+async def transform_coordinates(
+    source_crs: Annotated[str, Field(description='源坐标系统，支持EPSG、WKT和Proj格式，例如："EPSG:4326" 或 "+proj=longlat +datum=WGS84"')], 
+    target_crs: Annotated[str, Field(description='目标坐标系统，支持EPSG、WKT和Proj格式，例如："EPSG:3857" 或 "+proj=merc +a=6378137 +b=6378137 +lat_ts=0 +lon_0=0 +x_0=0 +y_0=0 +k=1 +units=m +no_defs"')], 
+    coordinates: Annotated[List[CoordinateItem], Field(description="要转换的坐标列表，每个坐标包含x和y值", min_items=1)]
+) -> str:
     """处理坐标转换请求"""
     # if not all([source_crs, target_crs, coordinates]):
     #     # FastMCP might handle this based on schema, but explicit check is good.
@@ -25,9 +29,8 @@ async def transform_coordinates(source_crs: str, target_crs: str, coordinates: L
     #     # or rely on the CoordinateTransformer to raise errors for invalid CRS.
     #     # For now, let's assume valid inputs as per schema.
     #     pass
-
+    transformer = CoordinateTransformer()
     try:
-        transformer = CoordinateTransformer()
         transformer.set_source_crs(source_crs)
         transformer.set_target_crs(target_crs)
         transformer.initialize_transformer()
