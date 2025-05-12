@@ -1,16 +1,16 @@
 from mcp.server.fastmcp import FastMCP
 from starlette.applications import Starlette
 from starlette.routing import Mount
-from typing import List, Dict, Any, Annotated # Add Annotated
-from pydantic import BaseModel, Field # Add Field
-from core.transformation import CoordinateTransformer # Assuming core.transformation is in the same directory level
+# from typing import List, Dict, Any, Annotated # Add Annotated
+# from pydantic import BaseModel, Field # Add Field
+# from core.transformation import CoordinateTransformer # Assuming core.transformation is in the same directory level
 
 mcp = FastMCP("Coordinate Transform App")
 
 # Define Pydantic model for a single coordinate
-class CoordinateItem(BaseModel):
-    x: Annotated[float, Field(description="X坐标值")]
-    y: Annotated[float, Field(description="Y坐标值")]
+# class CoordinateItem(BaseModel):
+#     x: Annotated[float, Field(description="X坐标值")]
+#     y: Annotated[float, Field(description="Y坐标值")]
 
 # @mcp.tool(
 #     name="transform_coordinates",
