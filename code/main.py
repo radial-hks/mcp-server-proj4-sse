@@ -4,19 +4,32 @@ for item in sys.path:
     print(item)
 import os
 
-if os.path.isdir("/code/python"):
-    print("Directory exists.")
-    try:
-        items = os.listdir("/code/python")
-        print("Directory contents:")
-        for item in items:
-            print(item)
-    except OSError as e:
-        print(f"Error listing directory: {e}")
-else:
-    print("Directory does not exist.")
+# if os.path.isdir("/code/python"):
+#     print("Directory exists.")
+#     try:
+#         items = os.listdir("/code/python")
+#         print("Directory contents:")
+#         for item in items:
+#             print(item)
+#     except OSError as e:
+#         print(f"Error listing directory: {e}")
+# else:
+#     print("Directory does not exist.")
 
-from mcp.server.fastmcp import FastMCP
+from importlib.metadata import distributions
+def get_installed_packages():
+    return [
+        (dist.metadata["Name"], dist.version)
+        for dist in distributions()
+    ]
+# 使用示例
+packages = get_installed_packages()
+for name, version in packages:
+    print(f"{name}=={version}")
+
+# from mcp.server.fastmcp import FastMCP
+# from fastmcp.server.fastmcp import FastMCP
+from fastmcp import FastMCP
 from starlette.applications import Starlette
 from starlette.applications import Starlette
 from starlette.routing import Mount
