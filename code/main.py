@@ -1,6 +1,7 @@
 from mcp.server.fastmcp import FastMCP
 from starlette.applications import Starlette
 from starlette.routing import Mount
+import uvicorn
 
 mcp = FastMCP("Coordinate Transform App")
 
@@ -32,3 +33,7 @@ app = Starlette(
         Mount('/', app=mcp.sse_app()),
     ]
 )
+
+if __name__ == "__main__":
+    print(uvicorn.__version__)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
