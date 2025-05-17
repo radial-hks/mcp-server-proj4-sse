@@ -1,7 +1,10 @@
+import sys
+sys.path.insert(0, "/code/python")
 from fastmcp import FastMCP
 from starlette.applications import Starlette
 from starlette.routing import Mount
 import uvicorn
+
 
 mcp = FastMCP("Coordinate Transform App")
 
