@@ -1,5 +1,20 @@
 import sys
 sys.path.insert(0, "/code/python")
+for item in sys.path:
+    print(item)
+import os
+
+if sys.is_dir("/code/python"):
+    print("Directory exists.")
+    try:
+        items = os.listdir("/code/python")
+        print("Directory contents:")
+        for item in items:
+            print(item)
+    except OSError as e:
+        print(f"Error listing directory: {e}")
+else:
+    print("Directory does not exist.")
 from fastmcp import FastMCP
 from starlette.applications import Starlette
 from starlette.routing import Mount
