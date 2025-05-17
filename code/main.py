@@ -80,3 +80,7 @@ app = Starlette(
         Mount('/', app=mcp.sse_app()),
     ]
 )
+
+if __name__ == "__main__":
+    print(uvicorn.__version__)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
