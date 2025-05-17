@@ -4,7 +4,7 @@ for item in sys.path:
     print(item)
 import os
 
-if sys.is_dir("/code/python"):
+if os.path.isdir("/code/python"):
     print("Directory exists.")
     try:
         items = os.listdir("/code/python")
